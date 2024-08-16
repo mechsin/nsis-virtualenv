@@ -13,7 +13,7 @@ Var VIRTUALENV_PYTHONEXE
   ${EndIf}
   
   DetailPrint "Creating virtual environment"
-  nsExec::ExecToLog 'py -${PYTHONVERSION} -m venv ${VENVPATH}'
+  nsExec::ExecToLog 'py -${PYTHONVERSION} -m venv $\"${VENVPATH}$\"'
   Pop $VIRTUALENV_EXITCODE
   ${If} $VIRTUALENV_EXITCODE == 0
     DetailPrint "Python virtual environment created at ${VENVPATH}"
@@ -28,7 +28,7 @@ Var VIRTUALENV_PYTHONEXE
   DetailPrint "Using links from ${LINKS}"
   StrCpy $VIRTUALENV_PYTHONEXE "${VENVPATH}\Scripts\python.exe"
   DetailPrint $VIRTUALENV_PYTHONEXE
-  nsExec::ExecToLog '$VIRTUALENV_PYTHONEXE -m pip install --no-index --find-links ${LINKS} ${PACKAGENAME}'
+  nsExec::ExecToLog '$\"$VIRTUALENV_PYTHONEXE$\" -m pip install --no-index --find-links ${LINKS} ${PACKAGENAME}'
   Pop $VIRTUALENV_EXITCODE
   ${If} $VIRTUALENV_EXITCODE == 0
     DetailPrint "Packages successfully installed"
@@ -39,7 +39,7 @@ Var VIRTUALENV_PYTHONEXE
 
 !macro PythonInstallInternet VENVPATH PACKAGENAME
   StrCpy $VIRTUALENV_PYTHONEXE "${VENVPATH}\Scripts\python.exe"
-  nsExec::ExecToLog '$VIRTUALENV_PYTHONEXE -m pip install ${PACKAGENAME}'
+  nsExec::ExecToLog '$\"$VIRTUALENV_PYTHONEXE$\" -m pip install ${PACKAGENAME}'
   Pop $VIRTUALENV_EXITCODE
   ${If} $VIRTUALENV_EXITCODE == 0
     DetailPrint "Packages successfully installed"
